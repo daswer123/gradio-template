@@ -1,19 +1,27 @@
 import gradio as gr
 from layouts.layout_manager import LayoutManager
-from layouts.custom.settings_layout import SettingsLayout
+from layouts.custom.studio_layout import StudioLayout
+from core.shared_state import SharedState, TestSharedState
 
 def create_app():
     # Создаем менеджер layouts
     layout_manager = LayoutManager()
     
-    # Регистрируем layouts
-    layout_manager.register_layout('settings_layout', SettingsLayout)
+    # Вариант 1: Использование стандартного SharedState
+    layout_manager.register_layout('studio_layout', StudioLayout, SharedState)
+    
+    # Вариант 2: Использование кастомного SharedState
+    layout_manager.register_layout('studio_layout_custom', StudioLayout, TestSharedState)
+    
     
     # Создаем основной интерфейс с табами
     with gr.Blocks() as demo:
-        with gr.Tab("Settings"):
-            layout_manager.render_layout('settings_layout')
-
+        with gr.Tab("Studio (Standard)"):
+            layout_manager.render_layout('studio_layout')
+            
+        with gr.Tab("Studio (Custom)"):
+            layout_manager.render_layout('studio_layout_custom')
+            
     return demo
 
 if __name__ == "__main__":
