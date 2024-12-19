@@ -39,5 +39,23 @@ class InputMediaHandlers(BaseHandler):
         super().__init__(logic, ui_elements, shared_state, state_manager)
 
     def bind_handlers(self):
-        pass
+        
+        # Кнопка очистки
+        self.ui_elements["clear_button"].click(
+            fn=self.logic.clear_input_media,
+            outputs=[self.ui_elements["input_media"], self.ui_elements["input_microphone"], self.ui_elements["input_youtube_url"]]
+        )
+
+        # Кнопка обработки
+        print(self.export_manager._components)
+        output_video = self.export_manager.get_element("output_media_studio","output_media")
+        output_audio = self.export_manager.get_element("output_media_studio","output_audio")
+        # output_files = self.export_manager.get_element("output_media_studio","output_subs")
+
+
+        self.ui_elements["process_button"].click(
+            fn=self.logic.process_input_media,
+            inputs=[self.ui_elements["input_media"], self.ui_elements["input_microphone"], self.ui_elements["input_youtube_url"]],
+            outputs=[output_video, output_audio]
+        )
 

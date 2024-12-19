@@ -9,7 +9,7 @@ class SharedState(BaseSharedState):
         # Создаем и регистрируем элементы
         some_var = gr.Textbox(
             label="Some Var",
-            visible=True
+            visible=False
         )
         self.register_element('some_var', some_var)
         

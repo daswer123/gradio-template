@@ -4,3 +4,7 @@ gradio==4.44.1
 # Libraries
 numpy==1.26.1
 sqlalchemy>=2
+
+# Input media
+yt-dlp 
+ffmpeg-python

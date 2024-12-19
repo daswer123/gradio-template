@@ -11,16 +11,13 @@ def create_app():
     layout_manager.register_layout('studio_layout', StudioLayout, SharedState)
     
     # Вариант 2: Использование кастомного SharedState
-    layout_manager.register_layout('studio_layout_custom', StudioLayout, TestSharedState)
+    # layout_manager.register_layout('studio_layout_custom', StudioLayout, TestSharedState)
     
     
     # Создаем основной интерфейс с табами
     with gr.Blocks() as demo:
         with gr.Tab("Studio (Standard)"):
             layout_manager.render_layout('studio_layout')
-            
-        with gr.Tab("Studio (Custom)"):
-            layout_manager.render_layout('studio_layout_custom')
             
     return demo
 

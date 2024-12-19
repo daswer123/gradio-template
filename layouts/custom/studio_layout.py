@@ -30,8 +30,6 @@ class StudioLayout(BaseLayout):
             self.shared_state, 
             "output_media_studio"
         )
-        
-
 
     def render(self):
         # Рендерим шейред стейт
@@ -39,8 +37,11 @@ class StudioLayout(BaseLayout):
 
         """Рендер layout студии"""
         with gr.Column():
-            # Рендер компонентов
+            # Сначала создаем все UI элементы
             with gr.Row():
-                self.components['input_media_studio'].setup() 
-                self.components['output_media_studio'].setup() 
-                    
+                self.components['input_media_studio'].setup_ui()
+                self.components['output_media_studio'].setup_ui()
+            
+            # После создания всех UI элементов привязываем обработчики
+            for component in self.components.values():
+                component.setup_handlers()

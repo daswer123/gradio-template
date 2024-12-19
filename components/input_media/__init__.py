@@ -4,16 +4,16 @@ from core.shared_state import SharedState
 from ..base_component import BaseComponent
 from .logic import InputMediaLogic
 from .ui import create_input_media_ui
-from .handlers import InputMediaHandlers,SettingsHandlers
+from .handlers import InputMediaHandlers, SettingsHandlers
 
 class InputMediaComponent(BaseComponent):
-    def __init__(self, shared_state: SharedState, component_name: str = "input_media"):
+    def __init__(self, shared_state: SharedState, component_name: str):
         super().__init__(shared_state, component_name)
-
         # Используем settings_manager из базового класса
         self.logic = InputMediaLogic(self.component_name, self.settings_manager)
         
-    def setup(self):
+    def setup_ui(self):
+        """Создание и регистрация UI элементов"""
         # Загружаем текущие настройки
         current_settings = self.logic.load_settings()
         
@@ -23,22 +23,22 @@ class InputMediaComponent(BaseComponent):
         # Регистрируем UI элементы в export manager
         self.register_ui_elements(ui_elements)
         
-        # Привязываем обработчики
-        handlers = InputMediaHandlers(
-            self.logic, 
-            self.ui_elements, 
-            self.shared_state,
-            self.state_manager
-        )
-        handlers.bind_handlers()
-
-        # Создаем обработчик настроек
+    def setup_handlers(self):
+        """Привязка обработчиков"""
+        # Привязываем обработчики настроек
         settings_handlers = SettingsHandlers(
-            self.logic, 
-            self.ui_elements, 
+            self.logic,
+            self.ui_elements,
             self.shared_state,
             self.state_manager
         )
         settings_handlers.bind_handlers()
         
-        return self
+        # Привязываем основные обработчики
+        input_handlers = InputMediaHandlers(
+            self.logic,
+            self.ui_elements,
+            self.shared_state,
+            self.state_manager
+        )
+        input_handlers.bind_handlers()

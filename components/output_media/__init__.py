@@ -7,13 +7,13 @@ from .ui import create_output_media_ui
 from .handlers import OutputMediaHandlers
 
 class OutputMediaComponent(BaseComponent):
-    def __init__(self, shared_state: SharedState, component_name: str = "output_media"):
+    def __init__(self, shared_state: SharedState, component_name: str):
         super().__init__(shared_state, component_name)
-
         # Используем settings_manager из базового класса
         self.logic = OutputMediaLogic(self.component_name, self.settings_manager)
         
-    def setup(self):
+    def setup_ui(self):
+        """Создание и регистрация UI элементов"""
         # Загружаем текущие настройки
         current_settings = self.logic.load_settings()
         
@@ -23,7 +23,8 @@ class OutputMediaComponent(BaseComponent):
         # Регистрируем UI элементы в export manager
         self.register_ui_elements(ui_elements)
         
-        # Привязываем обработчики
+    def setup_handlers(self):
+        """Привязка обработчиков"""
         handlers = OutputMediaHandlers(
             self.logic, 
             self.ui_elements, 
@@ -31,6 +32,3 @@ class OutputMediaComponent(BaseComponent):
             self.state_manager
         )
         handlers.bind_handlers()
-
-        
-        return self

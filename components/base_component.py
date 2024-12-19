@@ -36,6 +36,17 @@ class BaseComponent(ABC):
         self.export_manager.register_component(self.component_name, elements)
     
     @abstractmethod
-    def setup(self):
-        """Инициализация компонента"""
+    def setup_ui(self):
+        """Создание и регистрация UI элементов"""
         pass
+
+    @abstractmethod
+    def setup_handlers(self):
+        """Привязка обработчиков"""
+        pass
+    
+    def setup(self):
+        """Полная инициализация компонента"""
+        self.setup_ui()
+        self.setup_handlers()
+        return self
