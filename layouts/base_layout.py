@@ -17,6 +17,8 @@ class BaseLayout:
         
     def render(self):
         """Рендер layout - переопределяется в наследниках"""
+        # Инициализируем элементы shared state в контексте Gradio
+        self.shared_state.initialize_elements()
         pass
     
     def launch(self):

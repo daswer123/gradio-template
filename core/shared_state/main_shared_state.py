@@ -7,16 +7,15 @@ class SharedState(BaseSharedState):
     def initialize_elements(self):
         """Инициализация элементов для основного приложения"""
         # Создаем и регистрируем элементы
-        silent_audio = gr.File(
-            label="Silent Audio",
-            type="filepath",
-            visible=False
+        some_var = gr.Textbox(
+            label="Some Var",
+            visible=True
         )
-        self.register_element('silent_audio', silent_audio)
+        self.register_element('some_var', some_var)
         
         # Можно добавить другие элементы
         # self.register_element('some_element', gr.some_element(...))
     
-    def get_silent_audio(self):
+    def get_some_var(self):
         """Пример метода для удобного доступа к конкретному элементу"""
-        return self.get_element('silent_audio')
+        return self.get_element('some_var')

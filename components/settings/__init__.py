@@ -21,7 +21,10 @@ class SettingsComponent(BaseComponent):
         current_settings = self.logic.load_settings()
         
         # Создаем UI
-        self.ui_elements = create_settings_ui(current_settings)
+        ui_elements = create_settings_ui(current_settings)
+        
+        # Регистрируем UI элементы в export manager
+        self.register_ui_elements(ui_elements)
         
         # Привязываем обработчики
         handlers = SettingsHandlers(

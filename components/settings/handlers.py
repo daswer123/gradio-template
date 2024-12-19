@@ -19,6 +19,9 @@ class SettingsHandlers:
             
             return new_settings
         
+        def update_some(volume):
+            return volume
+        
         # Привязываем один обработчик ко всем элементам
 
 
@@ -36,3 +39,9 @@ class SettingsHandlers:
                     ],
                 outputs=[local_state]
             )
+
+        self.ui_elements['volume'].change(
+            fn=update_some,
+            inputs=[self.ui_elements['volume']],
+            outputs=self.shared_state.get_some_var()
+        )
